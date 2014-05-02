@@ -7,7 +7,7 @@
 void
 printHelp()
 {
-	std::cout << "imw2png input output" << std::endl
+	std::cout << "imw2png input[.imw] output" << std::endl
 			  << "Will save input.imw as output.png with values map from "
 			  << std::endl
 			  << "[0; mu + 3 * sigma] to [0; 255]" << std::endl;
@@ -22,7 +22,12 @@ int main (int argc, char* argv[])
 		return 1;
 	}
 
-	cv::Mat SARImage = ReadImw(argv[1]);
+	std::string inputFileName(argv[1]);
+
+	if (inputFileName.substr(inputFileName.length() - 4).compare(".imw") == 0)
+		inputFileName.erase(inputFileName.length() - 4);
+
+	cv::Mat SARImage = ReadImw(inputFileName.c_str());
 	cv::Scalar mean;
 	cv::Scalar stddev;
 
