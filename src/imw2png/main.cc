@@ -8,16 +8,16 @@
 void
 printHelp()
 {
-	std::cout << "imw2png input[.imw] n output" << std::endl
-			  << "Will save input.imw as output.png with values map from "
-			  << std::endl
+	std::cout << "imw2png input[.imw] n [output]" << std::endl << std::endl
+			  << "Will save input.imw as output.png (or input.png if output"
+			  << std::endl << "is not set) with values map from " << std::endl
 			  << "[0; mu + n * sigma] to [0; 255] with n a float" << std::endl;
 }
 
 
 int main (int argc, char* argv[])
 {
-	if (argc != 4)
+	if (argc != 3 && argc != 4)
 	{
 		printHelp();
 		return 1;
@@ -25,7 +25,7 @@ int main (int argc, char* argv[])
 
 	std::string inputFileName(argv[1]);
 
-	if (inputFileName.substr(inputFileName.length() - 4).compare(".imw") == 0)
+	if (inputFileName.length() > 4 && inputFileName.substr(inputFileName.length() - 4).compare(".imw") == 0)
 		inputFileName.erase(inputFileName.length() - 4);
 
 	cv::Mat SARImage = ReadImw(inputFileName.c_str());
@@ -52,7 +52,12 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	std::string outputFileName(argv[3]);
+	std::string outputFileName;
+	if (argc == 4)
+		outputFileName = argv[3];
+	else
+		outputFileName = inputFileName;
+
 	outputFileName += ".png";
 
 	cv::imwrite(outputFileName.c_str(), Output);
