@@ -1,22 +1,23 @@
 #include "../ImwHelper.hh"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include <cv.h>
 #include <highgui.h>
 
 void
 printHelp()
 {
-	std::cout << "imw2png input[.imw] output" << std::endl
+	std::cout << "imw2png input[.imw] n output" << std::endl
 			  << "Will save input.imw as output.png with values map from "
 			  << std::endl
-			  << "[0; mu + 3 * sigma] to [0; 255]" << std::endl;
+			  << "[0; mu + n * sigma] to [0; 255] with n a float" << std::endl;
 }
 
 
 int main (int argc, char* argv[])
 {
-	if (argc != 3)
+	if (argc != 4)
 	{
 		printHelp();
 		return 1;
@@ -33,7 +34,9 @@ int main (int argc, char* argv[])
 
 	cv::meanStdDev(SARImage, mean, stddev);
 
-	double upperVal = mean.val[0] + 3 * stddev.val[0];
+	double n = atof(argv[2]);
+
+	double upperVal = mean.val[0] + n * stddev.val[0];
 
 	cv::Mat Output(SARImage.size(), CV_8U);
 
@@ -49,7 +52,7 @@ int main (int argc, char* argv[])
 		}
 	}
 
-	std::string outputFileName(argv[2]);
+	std::string outputFileName(argv[3]);
 	outputFileName += ".png";
 
 	cv::imwrite(outputFileName.c_str(), Output);
