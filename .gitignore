@@ -2,20 +2,25 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
-*.lib
 
-# Executables
-*.exe
-*.out
-*.app
+# Emacs
+*~
+\#*\#
+
+# CMake related
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# MacOSX
+.DS_Store
