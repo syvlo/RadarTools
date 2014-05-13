@@ -7,12 +7,12 @@ set ( SRC_DIR "src" )
 set ( BIN_DIR "bin" )
 
 find_package( OpenCV REQUIRED )
+include_directories(/Path/to/libSAR/include/)
 
 add_executable(${BIN_DIR}/imw2png
   ${SRC_DIR}/imw2png/main.cc
-  ${SRC_DIR}/ImwHelper.cc
 )
 
 target_link_libraries (${BIN_DIR}/imw2png
-  ${OpenCV_LIBS}
+  ${OpenCV_LIBS} SAR
 )

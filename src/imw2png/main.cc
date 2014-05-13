@@ -1,4 +1,4 @@
-#include "../ImwHelper.hh"
+#include <ImwHelper.hh>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -60,6 +60,7 @@ int main (int argc, char* argv[])
 
 	outputFileName += ".png";
 
+	std::clog << "Writing to " << outputFileName.c_str() << std::endl;
 	cv::imwrite(outputFileName.c_str(), Output);
 
 	return 0;
